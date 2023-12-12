@@ -1,6 +1,7 @@
-import { useLazyQuery } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
+
 import client from './apollo';
+import { RepositoryEdgeType } from '../types/repository-edge.type';
 
 const SEARCH_REPOSITORIES = gql`
   query SearchRepositories($query: String!) {
@@ -20,7 +21,14 @@ const SEARCH_REPOSITORIES = gql`
   }
 `;
 
-export const useSearchRepositories = () =>
-  useLazyQuery(SEARCH_REPOSITORIES, {
+type Response = {
+  search: {
+    edges: RepositoryEdgeType[]
+  }
+}
+
+export const useSearchRepositories = () => {
+  return useLazyQuery<Response>(SEARCH_REPOSITORIES, {
     client,
   });
+};
