@@ -1,12 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs, Typography } from '@mui/material';
 
-import { repositoryRoutes } from '../routing/RepositoriesRoutes.routes';
+import { RepositoryRoute } from '@/routing';
 
-const BreadcrumbsPartial = () => {
+export const BreadcrumbsPartial = () => {
   const location = useLocation();
 
-  const isSearchPageValue = location.pathname === repositoryRoutes.SearchPage
+  const isSearchPageValue = location.pathname === RepositoryRoute.SearchPage
   const breadcrumbsText = isSearchPageValue ? 'Search' : 'Favorites'
 
   return (
@@ -16,5 +16,3 @@ const BreadcrumbsPartial = () => {
     </Breadcrumbs>
   );
 };
-
-export default BreadcrumbsPartial;

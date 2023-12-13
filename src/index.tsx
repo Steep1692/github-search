@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
+import packageJson from '../package.json';
+
 import App from './App';
 
 const root = ReactDOM.createRoot(
@@ -10,7 +12,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={packageJson.homepage}>
       <App/>
     </BrowserRouter>
   </React.StrictMode>

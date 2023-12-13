@@ -1,4 +1,4 @@
-import { RepositoryType } from '../types/repository.type';
+import { RepositoryType } from '@/types';
 
 const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
 const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';

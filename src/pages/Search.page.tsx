@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { TextField, CircularProgress, List, ListItem, ListItemText, debounce, Grid, Button } from '@mui/material';
 
-import { RepositoryType } from '../types/repository.type';
-import { useSearchRepositories } from '../services/search-repositories.service';
+import { RepositoryType } from '@/types';
+import { useSearchRepositories } from '@/services';
 
 type Props = {
   favoriteRepositories: RepositoryType[];
   onAddToFavorite: (repository: RepositoryType) => void;
 }
 
-const SearchPage: React.FC<Props> = ({ favoriteRepositories, onAddToFavorite }) => {
+export const SearchPage: FC<Props> = ({ favoriteRepositories, onAddToFavorite }) => {
   const [query, setQuery] = useState('');
   const [searchRepositories, { loading, data }] = useSearchRepositories();
 
@@ -85,5 +85,3 @@ const SearchPage: React.FC<Props> = ({ favoriteRepositories, onAddToFavorite }) 
     </Grid>
   );
 };
-
-export default SearchPage;

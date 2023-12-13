@@ -1,7 +1,7 @@
 import { gql, useLazyQuery } from '@apollo/client';
 
 import client from './apollo';
-import { RepositoryEdgeType } from '../types/repository-edge.type';
+import { RepositoryEdgeType } from '@/types';
 
 const SEARCH_REPOSITORIES = gql`
   query SearchRepositories($query: String!) {

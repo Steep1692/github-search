@@ -1,4 +1,4 @@
-export const repositoryRoutes = {
+export const RepositoryRoute = {
   SearchPage: '/',
   FavoritesPage: '/favorites'
 }
