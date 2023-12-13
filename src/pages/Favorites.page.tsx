@@ -1,14 +1,16 @@
+import { FC, useState } from 'react';
+
 import {
   Rating as MuiRating,
   IconButton,
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
+  ListItemSecondaryAction, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { RepositoryType } from '../types/repository.type';
+import { RepositoryType } from '@/types';
 
 type Props = {
   favorites: RepositoryType[];
@@ -17,7 +19,22 @@ type Props = {
   onRemoveFromFavorites: (id: RepositoryType['id']) => void;
 }
 
-const FavoritesPage: React.FC<Props> = ({ favoritesRatings, favorites, onRatingChange, onRemoveFromFavorites }) => {
+export const FavoritesPage: FC<Props> = ({ favoritesRatings, favorites, onRatingChange, onRemoveFromFavorites }) => {
+  const [repoToRemove, setRepoToRemove] = useState<RepositoryType | null>(null);
+
+  const handleOpen = (repo) => {
+    setRepoToRemove(repo);
+  };
+
+  const handleClose = () => {
+    setRepoToRemove(null);
+  };
+
+  const handleDelete = () => {
+    onRemoveFromFavorites(repoToRemove.id);
+    handleClose();
+  };
+
   return (
     <List>
       {
@@ -32,7 +49,7 @@ const FavoritesPage: React.FC<Props> = ({ favoritesRatings, favorites, onRatingC
                 onChange={(event, newValue) => onRatingChange(repo.id, newValue || 0)}
               />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete" onClick={() => onRemoveFromFavorites(repo.id)}>
+                <IconButton edge="end" aria-label="delete" onClick={() => handleOpen(repo)}>
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -47,8 +64,24 @@ const FavoritesPage: React.FC<Props> = ({ favoritesRatings, favorites, onRatingC
           </ListItem>
         )
       }
+
+      {/* Deletion Confirmation Dialog */}
+      <Dialog open={!!repoToRemove} onClose={handleClose}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to remove the repository "{repoToRemove?.name}" from favorites?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </List>
   );
 };
-
-export default FavoritesPage;
